@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  movies-jupyterlab:
+    build: ./image/
+    image: movies-jupyterlab:1.0.0
+    container_name: movies-jupyterlab
+    restart: unless-stopped
+    ports:
+      - 8888:8888
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+      GIT_REPO: ${GIT_REPO}
+    # https://jupyter-notebook.readthedocs.io/en/stable/config.html
+    command: >
+      start-notebook.sh --NotebookApp.allow_remote_access=true
