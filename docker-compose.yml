@@ -2,17 +2,21 @@ version: '3'
 
 services:
 
-  movies-jupyterlab:
-    build: ./image/
-    image: movies-jupyterlab:1.0.0
-    container_name: movies-jupyterlab
+  labo-indexation-ai-jupyterlab:
+    #build: ./image/
+    image: labo-image-test
+    container_name: labo-indexation-ai-jupyterlab
     restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
     ports:
-      - 8888:8888
+      - ${LABO_INDEXATION_AI_HTTP_PORT}:8888
     environment:
       JUPYTER_ENABLE_LAB: "yes"
-      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
-      GIT_REPO: ${GIT_REPO}
+      JUPYTER_TOKEN: ${LABO_INDEXATION_AI_JUPYTER_TOKEN}
+      LABO_INDEXATION_AI_GIT_REPO1_URL: ${LABO_INDEXATION_AI_GIT_REPO1_URL}
+      LABO_INDEXATION_AI_GIT_REPO1_NAME: ${LABO_INDEXATION_AI_GIT_REPO1_NAME}
+      LABO_INDEXATION_AI_GIT_REPO2_URL: ${LABO_INDEXATION_AI_GIT_REPO2_URL}
+      LABO_INDEXATION_AI_GIT_REPO2_NAME: ${LABO_INDEXATION_AI_GIT_REPO2_NAME}
     # https://jupyter-notebook.readthedocs.io/en/stable/config.html
-    command: >
-      start-notebook.sh --NotebookApp.allow_remote_access=true
