@@ -12,6 +12,8 @@ services:
     cpus: ${CPU_LIMIT}
     ports:
       - ${LABO_INDEXATION_AI_HTTP_PORT}:8888
+    volumes:
+      - ./volumes/labo-indexation-ai-jupyterlab/:/home/jovyan/work/
     environment:
       JUPYTER_ENABLE_LAB: "yes"
       JUPYTER_TOKEN: ${LABO_INDEXATION_AI_JUPYTER_TOKEN}
