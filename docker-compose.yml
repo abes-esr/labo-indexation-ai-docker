@@ -3,8 +3,7 @@ version: '3'
 services:
 
   labo-indexation-ai-jupyterlab:
-    #build: ./image/
-    image: labo-image-test
+    image: abesesr/labo-indexation-ai:develop-jupyterlab
     container_name: labo-indexation-ai-jupyterlab
     restart: unless-stopped
     mem_limit: ${MEM_LIMIT}
