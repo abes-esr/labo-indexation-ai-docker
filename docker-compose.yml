@@ -21,3 +21,35 @@ services:
       LABO_INDEXATION_AI_GIT_REPO2_URL: ${LABO_INDEXATION_AI_GIT_REPO2_URL}
       LABO_INDEXATION_AI_GIT_REPO2_NAME: ${LABO_INDEXATION_AI_GIT_REPO2_NAME}
     # https://jupyter-notebook.readthedocs.io/en/stable/config.html
+    labels:
+      - "com.centurylinklabs.watchtower.scope=labo-indexation-ai-watchtower-scope"
+
+
+  #######################################
+  # labo-indexation-ai-watchtower
+  # Conteneur chargé de mettre à jour automatiquement toutes les N secondes
+  # les images docker des conteneurs surveillés (via le système de label/scope de watchtower)
+  # plus d'info : https://containrrr.dev/watchtower
+  labo-indexation-ai-watchtower:
+    image: containrrr/watchtower:1.4.0
+    container_name: labo-indexation-ai-watchtower
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: 60
+      WATCHTOWER_DEBUG: "false"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
+      WATCHTOWER_RUN_ONCE: ${LABO_INDEXATION_AI_WATCHTOWER_RUN_ONCE}
+      WATCHTOWER_NOTIFICATIONS: "slack"
+      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${LABO_INDEXATION_AI_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${LABO_INDEXATION_AI_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-labo"
+      WATCHTOWER_SCOPE: "labo-indexation-ai-watchtower-scope"
+    labels:
+      - "com.centurylinklabs.watchtower.scope=labo-indexation-ai-watchtower-scope"
